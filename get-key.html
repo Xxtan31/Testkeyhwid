@@ -4,8 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Get Key</title>
+    <style>
+        body {
+            background-image: url('your_background_url_here'); /* Arka plan resmi */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        #generateButton {
+            background-color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+    <h1>Generate Your Key</h1>
+    <button id="generateButton">Get Key</button>
+
     <script>
         function generateRandomKey(length = 20) {
             const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -16,10 +38,9 @@
             return 'ATA-' + randomPart;
         }
 
-        window.onload = function() {
+        document.getElementById('generateButton').onclick = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const hwid = urlParams.get('hwid');
-            console.log('HWID:', hwid);
 
             if (hwid) {
                 const url = 'http://127.0.0.1:5000/create_key';
@@ -44,7 +65,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Oluşturulan Anahtar:', data.message);
+                    window.location.href = `key_display.html?key=${data.message}`;
                 })
                 .catch(error => {
                     console.error('Hata:', error);
