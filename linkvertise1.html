@@ -30,6 +30,19 @@
                 console.error('HWID not found in URL');
             }
         }
+
+        function isKeyValid() {
+            const now = new Date().getTime();
+            const expiration = localStorage.getItem('expiration');
+            return expiration && now < expiration;
+        }
+
+        window.onload = function() {
+            if (isKeyValid()) {
+                const hwid = new URLSearchParams(window.location.search).get('hwid');
+                window.location.href = 'get-key.html?hwid=' + hwid;
+            }
+        };
     </script>
 </body>
 </html>
