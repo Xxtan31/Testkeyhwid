@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Key</title>
+    <style>
+        body {
+            background-image: url('your_background_url_here'); /* Arka plan resmi */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: white;
+        }
+        #keyDisplay {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Key</h1>
+    <div id="keyDisplay"></div>
+    <input type="text" id="keyInput" readonly />
+    <div id="countdown"></div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('key');
+        document.getElementById('keyDisplay').innerText = key;
+        document.getElementById('keyInput').value = key;
+
+        let countdownMinutes = 3;
+        let countdownSeconds = countdownMinutes * 60;
+
+        const countdownTimer = setInterval(() => {
+            const minutes = Math.floor(countdownSeconds / 60);
+            const seconds = countdownSeconds % 60;
+            document.getElementById('countdown').innerText = `${minutes}m ${seconds}s`;
+
+            if (countdownSeconds <= 0) {
+                clearInterval(countdownTimer);
+                alert("Süre doldu. Yeni bir anahtar almak için lütfen tekrar deneyin.");
+            }
+            countdownSeconds--;
+        }, 1000);
+    </script>
+</body>
+</html>
