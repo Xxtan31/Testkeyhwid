@@ -18,7 +18,7 @@
         }
 
         // Sayfa yüklendiğinde çalışacak işlemler
-        document.addEventListener('DOMContentLoaded', function() {
+        window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const hwid = urlParams.get('hwid');
             console.log('HWID:', hwid); // HWID'yi console'da göster
@@ -55,7 +55,7 @@
             } else {
                 console.error('URL\'de HWID bulunamadı');
             }
-        });
+        };
     </script>
 </body>
 </html>
