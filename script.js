@@ -99,17 +99,15 @@ document.getElementById('generateButton').onclick = function() {
 
 // Tarayıcı kontrolü
 async function detectBrave() {
-    const isBrave = (window.navigator.brave && await window.navigator.brave.isBrave()) || false;
-    return isBrave;
+    return window.navigator.brave && await window.navigator.brave.isBrave();
 }
 
 function detectKiwi() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return userAgent.includes("Kiwi");
+    return navigator.userAgent.includes("Kiwi");
 }
 
 (async function() {
-    if (await detectBrave() || detectKiwi()) {
+    if (await detectBrave() || detectKiwi() || navigator.userAgent.includes("OPR")) {
         window.location.href = "error.html";
     }
 })();
