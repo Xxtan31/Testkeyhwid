@@ -6,18 +6,23 @@
     <title>Get Key</title>
     <style>
         body {
-            background-image: url('https://r2.guns.lol/f549d67c-c15e-4c5f-86f0-0dcdd8f27b67.gif'); /* Arka plan resmi */
+            background-image: url('https://r2.guns.lol/f549d67c-c15e-4c5f-86f0-0dcdd8f27b67.gif');
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            color: white; /* Added text color */
         }
         #generateButton {
             background-color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #generateButton:hover {
+            background-color: #f0f0f0; /* Hover effect */
         }
         h1 {
             text-align: center;
@@ -68,10 +73,11 @@
                     window.location.href = `key_display.html?key=${data.message}`;
                 })
                 .catch(error => {
+                    alert('Hata: ' + error.message); // Display error to user
                     console.error('Hata:', error);
                 });
             } else {
-                console.error('URL\'de hwid bulunamadı');
+                alert('URL\'de hwid bulunamadı'); // Notify user about missing hwid
             }
         };
 
