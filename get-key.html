@@ -12,7 +12,7 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
-            color: white; /* Added text color */
+            color: white;
         }
         #generateButton {
             background-color: white;
@@ -22,7 +22,7 @@
             transition: background-color 0.3s;
         }
         #generateButton:hover {
-            background-color: #f0f0f0; /* Hover effect */
+            background-color: #f0f0f0;
         }
         h1 {
             text-align: center;
@@ -70,14 +70,14 @@
                     return response.json();
                 })
                 .then(data => {
-                    window.location.href = `key_display.html?key=${data.message}`;
+                    alert(`Anahtarınız: ${data.message}`); // Anahtarı kullanıcıya göster
                 })
                 .catch(error => {
-                    alert('Hata: ' + error.message); // Display error to user
+                    alert('Hata: ' + error.message);
                     console.error('Hata:', error);
                 });
             } else {
-                alert('URL\'de hwid bulunamadı'); // Notify user about missing hwid
+                alert('URL\'de hwid bulunamadı');
             }
         };
 
