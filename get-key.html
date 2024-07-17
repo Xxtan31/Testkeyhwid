@@ -24,6 +24,15 @@
         #generateButton:hover {
             background-color: #f0f0f0;
         }
+        #keyUI {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #keyUI h1 {
+            margin-bottom: 20px;
+        }
         h1 {
             text-align: center;
         }
@@ -32,6 +41,12 @@
 <body>
     <h1>Generate Your Key</h1>
     <button id="generateButton">Get Key</button>
+    
+    <div id="keyUI">
+        <h1>Your Key</h1>
+        <p id="generatedKey"></p>
+        <p id="countdown"></p>
+    </div>
 
     <script>
         function generateRandomKey(length = 20) {
@@ -56,9 +71,39 @@
             return expiration && now < expiration;
         }
 
+        function showKeyUI(key) {
+            document.getElementById('generatedKey').innerText = key;
+            document.getElementById('keyUI').style.display = 'flex';
+            document.getElementById('generateButton').style.display = 'none';
+            startCountdown();
+        }
+
+        function startCountdown() {
+            const expiration = parseInt(localStorage.getItem('expiration'));
+            const countdownElement = document.getElementById('countdown');
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = expiration - now;
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                countdownElement.innerText = `Expires in: ${hours}h ${minutes}m ${seconds}s`;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    countdownElement.innerText = 'Key has expired.';
+                    localStorage.removeItem('generatedKey');
+                    localStorage.removeItem('expiration');
+                    document.getElementById('keyUI').style.display = 'none';
+                    document.getElementById('generateButton').style.display = 'block';
+                }
+            }, 1000);
+        }
+
         document.getElementById('generateButton').onclick = function() {
             if (isKeyValid()) {
                 alert('24 saat içinde sadece bir kez anahtar oluşturabilirsiniz.');
+                showKeyUI(localStorage.getItem('generatedKey'));
                 return;
             }
 
@@ -90,6 +135,7 @@
                 .then(data => {
                     alert(`Anahtarınız: ${data.message}`);
                     saveKeyToLocalStorage(data.message);
+                    showKeyUI(data.message);
                 })
                 .catch(error => {
                     alert('Hata: ' + error.message);
@@ -104,6 +150,13 @@
         if (navigator.userAgent.includes("Brave") || navigator.userAgent.includes("Kiwi")) {
             window.location.href = "error.html";
         }
+
+        // Sayfa yüklendiğinde geçerli bir anahtar varsa UI'yi göster
+        window.onload = function() {
+            if (isKeyValid()) {
+                showKeyUI(localStorage.getItem('generatedKey'));
+            }
+        };
     </script>
 </body>
 </html>
