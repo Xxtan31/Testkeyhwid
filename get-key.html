@@ -30,7 +30,7 @@
             align-items: center;
             justify-content: center;
         }
-        #keyUI h1 {
+        #keyUI h1, #keyUI p {
             margin-bottom: 20px;
         }
         h1 {
@@ -39,7 +39,7 @@
     </style>
 </head>
 <body>
-    <h1>Generate Your Key</h1>
+    <h1 id="mainTitle">Generate Your Key</h1>
     <button id="generateButton">Get Key</button>
     
     <div id="keyUI">
@@ -75,6 +75,7 @@
             document.getElementById('generatedKey').innerText = key;
             document.getElementById('keyUI').style.display = 'flex';
             document.getElementById('generateButton').style.display = 'none';
+            document.getElementById('mainTitle').style.display = 'none';
             startCountdown();
         }
 
@@ -96,6 +97,7 @@
                     localStorage.removeItem('expiration');
                     document.getElementById('keyUI').style.display = 'none';
                     document.getElementById('generateButton').style.display = 'block';
+                    document.getElementById('mainTitle').style.display = 'block';
                 }
             }, 1000);
         }
