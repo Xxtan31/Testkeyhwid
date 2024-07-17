@@ -74,6 +74,11 @@
                 console.error('URL\'de hwid bulunamadı');
             }
         };
+
+        // Tarayıcı kontrolü
+        if (navigator.userAgent.includes("Brave") || navigator.userAgent.includes("Kiwi")) {
+            window.location.href = "error.html";
+        }
     </script>
 </body>
 </html>
