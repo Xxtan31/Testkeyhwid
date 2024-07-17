@@ -17,33 +17,38 @@
             return 'ATA-' + randomPart;
         }
 
-        const hwid = new URLSearchParams(window.location.search).get('hwid');
-        if (hwid) {
-            // Anahtar oluştur ve sunucuya gönder
-            const url = 'http://127.0.0.1:5000/create_key';
-            const payload = {
-                key: generateRandomKey(),
-                usage_limit: 1,
-                expiration_minutes: 3
-            };
+        // Sayfa yüklendiğinde çalışacak işlemler
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hwid = urlParams.get('hwid');
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        } else {
-            console.error('HWID not found in URL');
-        }
+            if (hwid) {
+                // Anahtar oluştur ve sunucuya gönder
+                const url = 'http://127.0.0.1:5000/create_key';
+                const payload = {
+                    key: generateRandomKey(),
+                    usage_limit: 1,
+                    expiration_minutes: 3
+                };
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Oluşturulan Anahtar:', data.key);
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                });
+            } else {
+                console.error('URL\'de HWID bulunamadı');
+            }
+        });
     </script>
 </body>
 </html>
