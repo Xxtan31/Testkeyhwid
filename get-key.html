@@ -43,7 +43,25 @@
             return 'ATA-' + randomPart;
         }
 
+        function saveKeyToLocalStorage(key) {
+            const now = new Date();
+            const expiration = now.getTime() + (24 * 60 * 60 * 1000); // 24 saat
+            localStorage.setItem('generatedKey', key);
+            localStorage.setItem('expiration', expiration);
+        }
+
+        function isKeyValid() {
+            const now = new Date().getTime();
+            const expiration = localStorage.getItem('expiration');
+            return expiration && now < expiration;
+        }
+
         document.getElementById('generateButton').onclick = function() {
+            if (isKeyValid()) {
+                alert('24 saat içinde sadece bir kez anahtar oluşturabilirsiniz.');
+                return;
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             const hwid = urlParams.get('hwid');
 
@@ -70,7 +88,8 @@
                     return response.json();
                 })
                 .then(data => {
-                    alert(`Anahtarınız: ${data.message}`); // Anahtarı kullanıcıya göster
+                    alert(`Anahtarınız: ${data.message}`);
+                    saveKeyToLocalStorage(data.message);
                 })
                 .catch(error => {
                     alert('Hata: ' + error.message);
