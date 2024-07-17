@@ -21,7 +21,7 @@
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const hwid = urlParams.get('hwid');
-            console.log('HWID:', hwid); // HWID'yi console'da göster
+            console.log('HWID:', hwid); // HWID'yi konsola yaz
 
             if (hwid) {
                 // Anahtar oluştur ve sunucuya gönder
@@ -47,7 +47,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Oluşturulan Anahtar:', data.message); // veya data.key veya başka bir değer
+                    console.log('Oluşturulan Anahtar:', data.message); // Oluşturulan anahtarı konsola yaz
                 })
                 .catch(error => {
                     console.error('Hata:', error);
