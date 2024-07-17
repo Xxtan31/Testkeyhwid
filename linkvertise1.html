@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linkvertise 1</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            text-align: center;
+            padding-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Linkvertise Ad 1</h1>
+    <p>Click the button to proceed.</p>
+    <button onclick="proceed()">Proceed</button>
+
+    <script>
+        function proceed() {
+            const hwid = new URLSearchParams(window.location.search).get('hwid');
+            if (hwid) {
+                window.location.href = 'linkvertise2.html?hwid=' + hwid;
+            } else {
+                console.error('HWID not found in URL');
+            }
+        }
+    </script>
+</body>
+</html>
