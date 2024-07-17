@@ -16,33 +16,10 @@
         }
     </style>
 </head>
-<body>
+<body data-next-url="get-key.html">
     <h1>Linkvertise Ad 2</h1>
     <p>Click the button to proceed.</p>
     <button onclick="proceed()">Proceed</button>
-
-    <script>
-        function proceed() {
-            const hwid = new URLSearchParams(window.location.search).get('hwid');
-            if (hwid) {
-                window.location.href = 'get-key.html?hwid=' + hwid;
-            } else {
-                console.error('HWID not found in URL');
-            }
-        }
-
-        function isKeyValid() {
-            const now = new Date().getTime();
-            const expiration = localStorage.getItem('expiration');
-            return expiration && now < expiration;
-        }
-
-        window.onload = function() {
-            if (isKeyValid()) {
-                const hwid = new URLSearchParams(window.location.search).get('hwid');
-                window.location.href = 'get-key.html?hwid=' + hwid;
-            }
-        };
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
