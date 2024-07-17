@@ -38,9 +38,14 @@
                     },
                     body: JSON.stringify(payload)
                 })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Anahtar oluşturulurken bir hata oluştu.');
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    console.log('Oluşturulan Anahtar:', data.key);
+                    console.log('Oluşturulan Anahtar:', data.message); // veya data.key veya başka bir değer
                 })
                 .catch(error => {
                     console.error('Hata:', error);
